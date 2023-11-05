@@ -34,12 +34,21 @@ public static class ArraysTester {
     /// <returns>array of doubles that are the multiples of the supplied number</returns>
     private static double[] MultiplesOf(double number, int length)
     {
+        //Create an array to hold the answer
+        double[] array = new double[length];
+
+        //Loop through the array we created until it reaches length
+        for (int i = 0; i < length; i++)
+        {
+            //Multiply the number by the index plus 1
+            array[i] = number * (i + 1);
+        }   
         // TODO Problem 1 Start
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
 
-        return new double[0]; // replace this return statement with your own
+        return array; // replace this return statement with your own
     }
     
     /// <summary>
@@ -52,10 +61,22 @@ public static class ArraysTester {
     /// </summary>
     private static void RotateListRight(List<int> data, int amount)
     {
+
+        //create starting point
+        int start = data.Count - amount;
+        
+        //create a new list store the rotated numbers
+        List<int> rotatedNumbers = data.GetRange(start, amount);
+        
+        //remove the numbers we are going to rotate from data
+        data.RemoveRange(start, amount);
+
+        //reinsert those numbers at the beggining of the list
+        data.InsertRange(0, rotatedNumbers);
+    
         // TODO Problem 2 Start
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
-
     }
 }
