@@ -47,7 +47,6 @@ public static class TakingTurns {
         // Console.WriteLine(players);
         while (players.Length > 0)
             players.GetNextPerson();
-
         // Defect(s) Found: 
 
         Console.WriteLine("---------");
