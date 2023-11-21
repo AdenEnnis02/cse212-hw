@@ -108,11 +108,28 @@ public static class SetsAndMapsTester {
     /// </summary>
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
     private static void DisplayPairs(string[] words) {
+        var wordSet = new HashSet<string>();
+        
+        foreach (var word in words){
+            if (wordSet.Contains(ReversedWord(word))){
+                Console.WriteLine($"{word} & {ReversedWord(word)}");
+            }
+            else{
+                wordSet.Add(word);
+            }
+        }
         // To display the pair correctly use something like:
         // Console.WriteLine($"{word} & {pair}");
         // Each pair of words should displayed on its own line.
     }
 
+    private static string ReversedWord(string word) {
+        var charArray = word.ToCharArray();
+
+        Array.Reverse(charArray);
+
+        return new string(charArray);
+    }
     /// <summary>
     /// Read a census file and summarize the degrees (education)
     /// earned by those contained in the file.  The summary
@@ -129,11 +146,18 @@ public static class SetsAndMapsTester {
     /// #############
     private static Dictionary<string, int> SummarizeDegrees(string filename) {
         var degrees = new Dictionary<string, int>();
+
         foreach (var line in File.ReadLines(filename)) {
             var fields = line.Split(",");
+            string degree = fields[3];
             // Todo Problem 2 - ADD YOUR CODE HERE
+            if(!degrees.ContainsKey(degree)){
+                degrees[degree] = 1;
+            }
+            else{
+                degrees[degree] += 1;
+            }
         }
-
         return degrees;
     }
 
@@ -158,7 +182,33 @@ public static class SetsAndMapsTester {
     /// #############
     private static bool IsAnagram(string word1, string word2) {
         // Todo Problem 3 - ADD YOUR CODE HERE
-        return false;
+        word1 = word1.ToLower().Replace(" ", "");
+        word2 = word2.ToLower().Replace(" ", "");
+        
+        if (word1.Length != word2.Length){
+            return false;
+        }
+        var dictionary1 = new Dictionary<char, int>();
+        var dictionary2 = new Dictionary<char, int>();
+        foreach(var letter in word1){
+            if (!dictionary1.ContainsKey(letter)){
+                dictionary1[letter] = 1;
+            }
+            else{
+                dictionary1[letter] += 1;
+            }
+        }
+
+        foreach(var letter in word2){
+            if (!dictionary2.ContainsKey(letter)){
+                dictionary2[letter] = 1;
+            }
+            else{
+                dictionary2[letter] += 1;
+            }
+        }
+        
+        return dictionary1.OrderBy(pair => pair.Key).SequenceEqual(dictionary2.OrderBy(pair => pair.Key));
     }
 
     /// <summary>
