@@ -8,6 +8,9 @@
  * GitHub repository, unshared Google Drive folder) is acceptable.
  *
  */
+using System.ComponentModel;
+using System.Diagnostics;
+
 public static class Priority {
     public static void Test() {
         // TODO Problem 2 - Write and run test cases and fix the code to match requirements
@@ -21,7 +24,11 @@ public static class Priority {
         // Scenario: 
         // Expected Result: 
         Console.WriteLine("Test 1");
+        var queue = new TakingTurnsQueue();
+        
+        queue.AddPerson("John", 3);
 
+        Trace.Assert(queue.Length == 1, "Adding a person should increment the queue length.");
         // Defect(s) Found: 
 
         Console.WriteLine("---------");
@@ -31,10 +38,21 @@ public static class Priority {
         // Expected Result: 
         Console.WriteLine("Test 2");
 
+        queue.AddPerson("Alice", 2);
+
+        queue.GetNextPerson();
+
+        Trace.Assert(queue.Length == 1, "Getting the next person should decrement turns but not remove them from the queue.");
         // Defect(s) Found: 
 
         Console.WriteLine("---------");
 
         // Add more Test Cases As Needed Below
+        queue.AddPerson("Bob", 0);
+
+        queue.GetNextPerson();
+
+        Trace.Assert(queue.Length == 1, "Getting the next person with zero turns should move them to the back of the queue.");
+
     }
 }
